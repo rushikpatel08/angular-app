@@ -1,0 +1,24 @@
+mat-grid-tile {
+    background: rgb(163, 216, 237);
+  }
+
+img{
+    height:70%;
+    margin-top: -46%;
+  }
+  button{
+    border-radius: 3em;
+    z-index: 4;
+    top:70%; 
+    left: 35%;
+    margin-top: 100px;
+    font-weight: 500;
+    font-family: "Gotham", sans-serif;
+    cursor: pointer;
+  }
+  .product-details{
+    position:absolute;
+    margin-top: 85%;
+    font-size: 2.3rem;
+    font-weight: 700;
+  }
