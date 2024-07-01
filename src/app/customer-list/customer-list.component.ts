@@ -12,22 +12,30 @@ import { NgForm } from '@angular/forms';
 })
 export class CustomerListComponent implements OnInit {
   searchCustomer(): void {
+    // Check if the search input is not empty
     if (this.search.trim()) {
+      // Call the customerService's searchCustomersByName method with the search input
       this.customerService.searchCustomersByName(this.search).subscribe(
+        // Successful response handling
         (res: Customer[]) => {
+          // Update dataSource with the search results
           this.dataSource = res;
+          // Check if any records were returned
           this.noRecordsFound = this.dataSource.length === 0;
         },
+        // Error handling
         (err: HttpErrorResponse) => {
           console.error('Error searching customers:', err);
-          this.noRecordsFound = true; // Display "Not Found" message on error
+          // Set noRecordsFound to true to display "Not Found" message
+          this.noRecordsFound = true; 
         }
       );
     } else {
+      // If search input is empty, display all customers
       this.displayCustomer();
     }
   }
-
+  
   updateCustomer(id: number):void {
     this.router.navigate(['/customer',{id:id}]);
     
