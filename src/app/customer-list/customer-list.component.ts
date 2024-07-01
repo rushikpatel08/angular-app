@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../customer.service';
 import { Customer } from '../customer.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-customer-list',
@@ -10,7 +11,22 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./customer-list.component.css']
 })
 export class CustomerListComponent implements OnInit {
-
+  searchCustomer(): void {
+    if (this.search.trim()) {
+      this.customerService.searchCustomersByName(this.search).subscribe(
+        (res: Customer[]) => {
+          this.dataSource = res;
+          this.noRecordsFound = this.dataSource.length === 0;
+        },
+        (err: HttpErrorResponse) => {
+          console.error('Error searching customers:', err);
+          this.noRecordsFound = true; // Display "Not Found" message on error
+        }
+      );
+    } else {
+      this.displayCustomer();
+    }
+  }
 
   updateCustomer(id: number):void {
     this.router.navigate(['/customer',{id:id}]);
@@ -36,8 +52,8 @@ export class CustomerListComponent implements OnInit {
   dataSource:Customer[]=[];
   displayedColumns: string[] = ['id','email', 'name', 'phone', 'address', 'gender', 'department', 'skills','edit','delete'];
 
-
-
+  search: string = '';
+noRecordsFound: boolean = false;
   constructor(private customerService:CustomerService,private router:Router)
   {
     this.displayCustomer();
