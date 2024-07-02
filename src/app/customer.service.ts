@@ -39,4 +39,9 @@ export class CustomerService {
   public searchCustomersByName(name: string): Observable<Customer[]> {
     return this.httpClient.get<Customer[]>(`${this.api}/query`, { params: { name: name } });
   }
+
+  public displayCustomersByDepartment(department:string): Observable<Customer[]> {
+    return this.httpClient.get<Customer[]>(`${this.api}/department`, { params: { department: department } });
+  }
 }
+

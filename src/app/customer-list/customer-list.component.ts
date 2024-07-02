@@ -35,6 +35,26 @@ export class CustomerListComponent implements OnInit {
       this.displayCustomer();
     }
   }
+
+  onDepartmentChange():void {
+    if(this.selectedDepartment.trim())
+    {
+      this.customerService.displayCustomersByDepartment(this.selectedDepartment).subscribe(
+        (res: Customer[]) => {
+          // Update dataSource with the search results
+          this.dataSource = res;
+          // Check if any records were returned
+          this.noRecordsFound = this.dataSource.length === 0;
+        },
+        // Error handling
+        (err: HttpErrorResponse) => {
+          console.error('Error searching customers:', err);
+          // Set noRecordsFound to true to display "Not Found" message
+          this.noRecordsFound = true; 
+        }
+      );
+    }
+  }
   
   updateCustomer(id: number):void {
     this.router.navigate(['/customer',{id:id}]);
@@ -61,7 +81,10 @@ export class CustomerListComponent implements OnInit {
   displayedColumns: string[] = ['id','email', 'name', 'phone', 'address', 'gender', 'department', 'skills','edit','delete'];
 
   search: string = '';
+  selectedDepartment:string='';
 noRecordsFound: boolean = false;
+
+// Function to display all customers when page is loaded
   constructor(private customerService:CustomerService,private router:Router)
   {
     this.displayCustomer();

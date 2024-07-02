@@ -1,6 +1,16 @@
 <div class="container">
     <div align="right"><button mat-raised-button class="bg-warning mt-4" routerLink="/customer">Go To Customer List</button></div>
-    <div align="right" class="mt-4">
+    <div class="dropdown">
+        <mat-form-field>
+            <mat-label>Choose Your Department</mat-label>
+            <mat-select  name="department" [(ngModel)]="selectedDepartment" (selectionChange)="onDepartmentChange()">
+                <mat-option value="IT">IT</mat-option>
+                <mat-option value="Network">Network</mat-option>
+                <mat-option value="Hardware">Hardware</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div align="right" class="search">
         <form #searchForm="ngForm" (ngSubmit)="searchCustomer()">
         <mat-form-field appearance="outline" >
             <mat-label>Search By Name</mat-label>
