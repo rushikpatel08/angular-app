@@ -1,0 +1,26 @@
+<table class="table table-striped mt-5 border-5">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Gender</th>
+            <th>Department</th>
+            <th>Skills</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let customer of customers">
+            <td>{{customer.id}}</td>
+            <td>{{customer.name}}</td>
+            <td>{{customer.email}}</td>
+            <td>{{customer.phone}}</td>
+            <td>{{customer.address}}</td>
+            <td>{{customer.gender}}</td>
+            <td>{{customer.department}}</td>
+            <td>{{customer.skills}}</td>
+        </tr>
+    </tbody>
+</table>

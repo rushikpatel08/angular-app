@@ -36,24 +36,19 @@ export class CustomerListComponent implements OnInit {
     }
   }
 
-  onDepartmentChange():void {
-    if(this.selectedDepartment.trim())
-    {
-      this.customerService.displayCustomersByDepartment(this.selectedDepartment).subscribe(
-        (res: Customer[]) => {
-          // Update dataSource with the search results
-          this.dataSource = res;
-          // Check if any records were returned
-          this.noRecordsFound = this.dataSource.length === 0;
-        },
-        // Error handling
-        (err: HttpErrorResponse) => {
-          console.error('Error searching customers:', err);
+  
+  onDepartmentChange():void{
+    this.customerService.displayCustomersByDepartment(this.selectedDepartment).subscribe(
+      (data)=>{
+        this.dataSource=data;
+        //this.noRecordsFound = this.dataSource.length === 0;
+      },
+      (err)=>{
+        console.error('Error searching customers:', err);
           // Set noRecordsFound to true to display "Not Found" message
-          this.noRecordsFound = true; 
-        }
-      );
-    }
+          //this.noRecordsFound = true; 
+      }
+    );
   }
   
   updateCustomer(id: number):void {

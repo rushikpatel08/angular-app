@@ -21,13 +21,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import {MatTableModule} from '@angular/material/table';
+import { CustomerListNgforComponent } from './customer-list-ngfor/customer-list-ngfor.component';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
     CustomerComponent,
-    CustomerListComponent
+    CustomerListComponent,
+    CustomerListNgforComponent
   ],
   imports: [
 
