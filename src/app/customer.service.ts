@@ -36,11 +36,11 @@ export class CustomerService {
     return this.httpClient.put<Customer>(`${this.api}/update`,customer);
   }
 
-  public searchCustomersByName(name: string): Observable<Customer[]> {
+  public searchCustomersByName(name: string) {
     return this.httpClient.get<Customer[]>(`${this.api}/query`, { params: { name: name } });
   }
 
-  public displayCustomersByDepartment(department:string): Observable<Customer[]> {
+  public displayCustomersByDepartment(department:string) {
     return this.httpClient.get<Customer[]>(`${this.api}/department`, { params: { department: department } });
   }
 }
