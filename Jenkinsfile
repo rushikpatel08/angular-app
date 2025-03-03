@@ -2,34 +2,29 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = 'us-east-1'
         S3_BUCKET = 'rushik-first-s3bucket'
+        REPO_URL = 'https://github.com/rushikpatel08/angular-app.git'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'master', url: 'https://github.com/rushikpatel08/angular-app.git'
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
+                git branch: 'main', url: "${REPO_URL}"
             }
         }
 
         stage('Build Angular App') {
             steps {
-                sh 'ng build --configuration=production'
+                sh 'npm install'
+                sh 'ng build --configuration production'
             }
         }
 
         stage('Deploy to S3') {
             steps {
-                sh """
-                    aws s3 sync dist/your-angular-app-name/ s3://$S3_BUCKET --delete
-                """
+                sh '''
+                aws s3 sync dist/angular-app s3://${S3_BUCKET} --delete
+                '''
             }
         }
     }
