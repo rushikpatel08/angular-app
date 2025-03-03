@@ -60,6 +60,8 @@ export class CustomerComponent implements OnInit {
 
   saveCustomer(customerForm: NgForm): void {
     if (this.isCreateCustomer) {
+      this.customer.id = null; // Ensure the backend doesn't receive '0' or an invalid ID
+
       this.CustomerService.saveCustomer(this.customer).subscribe(
         {
           next: (res: Customer) => {

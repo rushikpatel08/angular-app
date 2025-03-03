@@ -1,6 +1,6 @@
 
 import { Customer } from './customer.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -11,10 +11,14 @@ export class CustomerService {
 
   constructor(private httpClient:HttpClient) { }
 
-  api="http://localhost:8080";
+ // api="http://ec2-54-227-207-54.compute-1.amazonaws.com:5000";
+ //api="http://localhost:5000";
+ api="http://ec2-18-212-27-10.compute-1.amazonaws.com:8080";
   public saveCustomer(customer:Customer):Observable<Customer>
   {
-    return this.httpClient.post<Customer>(`${this.api}/insert`,customer);
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.httpClient.post<Customer>(`${this.api}/insert`, customer, { headers });
+    //return this.httpClient.post<Customer>(`${this.api}/insert`,customer);
   }
 
   public displayCustomers():Observable<Customer[]>
