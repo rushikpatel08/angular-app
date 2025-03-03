@@ -11,7 +11,7 @@ export class CustomerService {
 
   constructor(private httpClient:HttpClient) { }
 
-  api="http://localhost:8080";
+  api="http://ec2-3-92-255-138.compute-1.amazonaws.com:8080";
   public saveCustomer(customer:Customer):Observable<Customer>
   {
     return this.httpClient.post<Customer>(`${this.api}/insert`,customer);
