@@ -23,7 +23,7 @@ pipeline {
         stage('Deploy to S3') {
             steps {
                 sh '''
-                aws s3 sync dist/angular-app s3://${S3_BUCKET} --delete
+                aws s3 sync dist/customer-angular s3://${S3_BUCKET} --delete
                 '''
             }
         }
