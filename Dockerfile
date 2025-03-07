@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build --project Customer_Angular --configuration production  # Corrected build command
+RUN npm run build -- --configuration production  # Corrected build command
 
 # Use Nginx for serving Angular app
 FROM nginx:alpine
