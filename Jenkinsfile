@@ -4,8 +4,6 @@ pipeline {
     environment {
         S3_BUCKET = 'rushik-first-s3bucket'
         REPO_URL = 'https://github.com/rushikpatel08/angular-app.git'
-        IMAGE_NAME = 'angular_app'
-        CONTAINER_NAME = 'angular_container'
     }
 
     stages {
@@ -15,32 +13,18 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Angular App') {
             steps {
-                sh 'docker build -t ${IMAGE_NAME} .'
+                sh 'npm install'
+                sh 'ng build --configuration production'
             }
         }
 
-        stage('Push to Docker Hub') {
+        stage('Deploy to S3') {
             steps {
-                withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
-                    sh 'docker tag ${IMAGE_NAME} your-dockerhub-username/${IMAGE_NAME}'
-                    sh 'docker push your-dockerhub-username/${IMAGE_NAME}'
-                }
-            }
-        }
-
-        stage('Deploy to EC2') {
-            steps {
-                sshagent(['ec2-key-pair']) {
-                    sh """
-                    ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-92-255-138.compute-1.amazonaws.com '
-                        docker pull your-dockerhub-username/${IMAGE_NAME} &&
-                        docker stop ${CONTAINER_NAME} || true &&
-                        docker rm ${CONTAINER_NAME} || true &&
-                        docker run -d --name ${CONTAINER_NAME} -p 80:80 your-dockerhub-username/${IMAGE_NAME}'
-                    """
-                }
+                sh '''
+                aws s3 sync dist/customer-angular s3://${S3_BUCKET} --delete
+                '''
             }
         }
     }
